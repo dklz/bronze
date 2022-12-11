@@ -4,18 +4,19 @@ import "encoding/json"
 
 // Optional is the interface that wraps methods for optional values.
 type Optional[T any] interface {
-	// Get returns the value and a boolean to indicate if the value is present.
+	// Get returns the inner value and a boolean to indicate if the value is
+	// present.
 	Get() (T, bool)
 
-	// OrElse returns the value if it is present; otherwise, it returns the
-	// provided argument.
+	// OrElse returns the inner value if it is present; otherwise, it returns
+	// the provided argument.
 	OrElse(T) T
 
-	// IsPresent indicates if the value is present.
+	// IsPresent indicates if the inner value is present.
 	IsPresent() bool
 
-	// Unwrap returns the value if it is present; otherwise, it returns the zero
-	// value.
+	// Unwrap returns the inner value if it is present; otherwise, it returns
+	// the zero value.
 	Unwrap() T
 }
 
