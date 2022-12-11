@@ -1,6 +1,7 @@
 package ty_test
 
 import (
+	"encoding/json"
 	"fmt"
 	"testing"
 
@@ -53,6 +54,34 @@ func TestOption(t *testing.T) {
 
 		assert.Equal(t, "hi", opt.OrElse("hi"))
 		assert.Equal(t, "", opt.Unwrap())
+	})
+
+	t.Run("MarshalJSON Some[string]", func(t *testing.T) {
+		opt := ty.Some("helloworld")
+		bytes, err := json.Marshal(opt)
+		assert.NoError(t, err)
+		assert.Equal(t, `"helloworld"`, string(bytes))
+	})
+
+	t.Run("MarshalJSON None[string]", func(t *testing.T) {
+		opt := ty.None[string]()
+		bytes, err := json.Marshal(opt)
+		assert.NoError(t, err)
+		assert.Equal(t, "null", string(bytes))
+	})
+
+	t.Run("UnmarshalJSON Some[string]", func(t *testing.T) {
+		var opt *ty.Option[string]
+		err := json.Unmarshal([]byte(`"helloworld"`), &opt)
+		assert.NoError(t, err)
+		assert.Equal(t, "helloworld", opt.Unwrap())
+	})
+
+	t.Run("UnmarshalJSON None[string]", func(t *testing.T) {
+		var opt *ty.Option[string]
+		err := json.Unmarshal([]byte(`null`), &opt)
+		assert.NoError(t, err)
+		assert.False(t, opt.IsPresent())
 	})
 }
 
