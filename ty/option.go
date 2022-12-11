@@ -1,6 +1,8 @@
 package ty
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 // Optional is the interface that wraps methods for optional values.
 type Optional[T any] interface {
@@ -14,6 +16,9 @@ type Optional[T any] interface {
 
 	// IsPresent indicates if the inner value is present.
 	IsPresent() bool
+
+	// MustGet returns the inner value if it is present; otherwise, it panics.
+	MustGet() T
 
 	// Unwrap returns the inner value if it is present; otherwise, it returns
 	// the zero value.
@@ -61,6 +66,15 @@ func (opt *Option[T]) OrElse(x T) T {
 // IsPresent implements [ty.Optional.IsPresent].
 func (opt *Option[T]) IsPresent() bool {
 	return opt != nil && opt.isPresent
+}
+
+// MustGet implements [ty.Optional.MustGet].
+func (opt *Option[T]) MustGet() T {
+	if !opt.IsPresent() {
+		panic("invoking MustGet on an empty ty.Option")
+	}
+
+	return opt.value
 }
 
 // Unwrap implements [ty.Optional.Unwrap].

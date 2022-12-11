@@ -19,6 +19,7 @@ func TestOption(t *testing.T) {
 		assert.Equal(t, 1, x)
 
 		assert.Equal(t, 1, opt.OrElse(2))
+		assert.Equal(t, 1, opt.MustGet())
 		assert.Equal(t, 1, opt.Unwrap())
 	})
 
@@ -31,6 +32,7 @@ func TestOption(t *testing.T) {
 		assert.Equal(t, "hello", x)
 
 		assert.Equal(t, "hello", opt.OrElse("hi"))
+		assert.Equal(t, "hello", opt.MustGet())
 		assert.Equal(t, "hello", opt.Unwrap())
 	})
 
@@ -42,6 +44,7 @@ func TestOption(t *testing.T) {
 		assert.False(t, ok)
 
 		assert.Equal(t, 2, opt.OrElse(2))
+		assert.Panics(t, func() { opt.MustGet() })
 		assert.Equal(t, 0, opt.Unwrap())
 	})
 
@@ -53,6 +56,7 @@ func TestOption(t *testing.T) {
 		assert.False(t, ok)
 
 		assert.Equal(t, "hi", opt.OrElse("hi"))
+		assert.Panics(t, func() { opt.MustGet() })
 		assert.Equal(t, "", opt.Unwrap())
 	})
 
