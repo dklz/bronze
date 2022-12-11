@@ -21,6 +21,11 @@ func TestMap(t *testing.T) {
 		out := fn.Map(in, func(x float64) float64 { return math.Pow(x, 2) })
 		assert.Equal(t, []float64{1, 4, 9, 16}, out)
 	})
+
+	t.Run("map nil slice", func(t *testing.T) {
+		out := fn.Map(nil, func(x float64) float64 { return x })
+		assert.Equal(t, []float64{}, out)
+	})
 }
 
 func TestFilter(t *testing.T) {
@@ -36,6 +41,11 @@ func TestFilter(t *testing.T) {
 		out := fn.Filter(in, func(x error) bool { return x != nil })
 		assert.Equal(t, []error{err1, err2}, out)
 	})
+
+	t.Run("filter nil slice", func(t *testing.T) {
+		out := fn.Filter(nil, func(x int) bool { return true })
+		assert.Equal(t, []int{}, out)
+	})
 }
 
 func TestReduce(t *testing.T) {
@@ -49,5 +59,10 @@ func TestReduce(t *testing.T) {
 		in := []string{"Hello", "World", "!"}
 		out := fn.Reduce(in, func(acc, x string) string { return acc + x }, "")
 		assert.Equal(t, "HelloWorld!", out)
+	})
+
+	t.Run("reduce nil slice", func(t *testing.T) {
+		out := fn.Reduce(nil, func(acc, x int) int { return acc + x }, 0)
+		assert.Equal(t, 0, out)
 	})
 }
