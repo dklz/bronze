@@ -1,5 +1,8 @@
+// Package fn provides some useful helper functions.
 package fn
 
+// Map returns a slice consisting of the results of applying the given mapper
+// function to the elements of the input slice.
 func Map[X, Y any](in []X, mapper func(X) Y) []Y {
 	out := make([]Y, len(in))
 	for i := 0; i < len(in); i++ {
@@ -8,6 +11,8 @@ func Map[X, Y any](in []X, mapper func(X) Y) []Y {
 	return out
 }
 
+// Filter return a slice consisting of the elements of the input slice that
+// match the given predicate.
 func Filter[T any](in []T, predicate func(T) bool) []T {
 	out := make([]T, 0)
 	for _, x := range in {
@@ -18,8 +23,10 @@ func Filter[T any](in []T, predicate func(T) bool) []T {
 	return out
 }
 
-func Reduce[T any](in []T, f func(acc, x T) T, initial T) T {
-	out := initial
+// Reduce performs a reduction on the elements of the slice using the provided
+// associative accumlation function and identity value.
+func Reduce[T any](in []T, f func(acc, x T) T, identity T) T {
+	out := identity
 	for _, x := range in {
 		out = f(out, x)
 	}
