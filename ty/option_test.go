@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"inflx.dev/bronze/ty"
+	"go.inflx.dev/bronze/ty"
 )
 
 func TestOption(t *testing.T) {

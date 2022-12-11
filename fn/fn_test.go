@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"inflx.dev/bronze/fn"
+	"go.inflx.dev/bronze/fn"
 )
 
 func TestMap(t *testing.T) {

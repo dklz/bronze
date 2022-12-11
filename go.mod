@@ -1,4 +1,4 @@
-module inflx.dev/bronze
+module go.inflx.dev/bronze
 
 go 1.19
 
