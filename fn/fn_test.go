@@ -66,3 +66,22 @@ func TestReduce(t *testing.T) {
 		assert.Equal(t, 0, out)
 	})
 }
+
+func TestAny(t *testing.T) {
+	t.Run("string slice", func(t *testing.T) {
+		in := []string{"hello", "world", "!"}
+		assert.True(t, fn.Any(in, func(x string) bool { return x == "hello" }))
+		assert.False(t, fn.Any(in, func(x string) bool { return len(x) > 99 }))
+	})
+
+	t.Run("int slice", func(t *testing.T) {
+		in := []int{1, 2, 3, 4}
+		assert.True(t, fn.Any(in, func(x int) bool { return x%2 == 0 }))
+		assert.False(t, fn.Any(in, func(x int) bool { return x%5 == 0 }))
+	})
+
+	t.Run("nil slice", func(t *testing.T) {
+		var in []int
+		assert.False(t, fn.Any(in, func(x int) bool { return true }))
+	})
+}

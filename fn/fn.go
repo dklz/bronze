@@ -32,3 +32,14 @@ func Reduce[T any](in []T, f func(acc, x T) T, identity T) T {
 	}
 	return out
 }
+
+// Any returns true if any elements of the input slice match the provided
+// predicate.
+func Any[T any](in []T, predicate func(T) bool) bool {
+	for _, x := range in {
+		if predicate(x) {
+			return true
+		}
+	}
+	return false
+}
