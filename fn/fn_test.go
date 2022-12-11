@@ -2,6 +2,7 @@ package fn_test
 
 import (
 	"errors"
+	"fmt"
 	"math"
 	"testing"
 
@@ -28,6 +29,13 @@ func TestMap(t *testing.T) {
 	})
 }
 
+func ExampleMap() {
+	nums := []int{1, 2, 3}
+	tenthPowers := fn.Map(nums, func(x int) float64 { return math.Pow(float64(x), 10) })
+	fmt.Println(tenthPowers)
+	// Output: [1 1024 59049]
+}
+
 func TestFilter(t *testing.T) {
 	t.Run("filter out odd numbers", func(t *testing.T) {
 		in := []int{1, 2, 3, 4, 5, 6}
@@ -46,6 +54,13 @@ func TestFilter(t *testing.T) {
 		out := fn.Filter(nil, func(x int) bool { return true })
 		assert.Equal(t, []int{}, out)
 	})
+}
+
+func ExampleFilter() {
+	nums := []int{1, 2, 3, 4, 5}
+	odds := fn.Filter(nums, func(x int) bool { return x%2 != 0 })
+	fmt.Println(odds)
+	// Output: [1 3 5]
 }
 
 func TestReduce(t *testing.T) {
@@ -67,6 +82,13 @@ func TestReduce(t *testing.T) {
 	})
 }
 
+func ExampleReduce() {
+	nums := []int{1, 2, 3}
+	sum := fn.Reduce(nums, func(acc, x int) int { return acc + x }, 0)
+	fmt.Println(sum)
+	// Output: 6
+}
+
 func TestAny(t *testing.T) {
 	t.Run("string slice", func(t *testing.T) {
 		in := []string{"hello", "world", "!"}
@@ -84,4 +106,11 @@ func TestAny(t *testing.T) {
 		var in []int
 		assert.False(t, fn.Any(in, func(x int) bool { return true }))
 	})
+}
+
+func ExampleAny() {
+	nums := []int{1, 2, 3}
+	hasEvenNumber := fn.Any(nums, func(x int) bool { return x%2 == 0 })
+	fmt.Println(hasEvenNumber)
+	// Output: true
 }
