@@ -64,7 +64,7 @@ func (opt *Option[T]) IsPresent() bool {
 
 // Unwrap implements [ty.Optional.Unwrap].
 func (opt *Option[T]) Unwrap() (x T) {
-	if !opt.isPresent {
+	if !opt.IsPresent() {
 		return
 	}
 
